@@ -11,7 +11,8 @@
 	<groupId>com.app</groupId>
 	<artifactId>spring-security-practice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-security-practice</name>
+    <packaging>pom</packaging>
+    <name>spring-security-practice</name>
 	<description>Demo projects for learning spring security</description>
 	<url/>
 	<licenses>
@@ -20,7 +21,10 @@
 	<developers>
 		<developer/>
 	</developers>
-	<scm>
+    <modules>
+        <module>basic-auth-no-db</module>
+    </modules>
+    <scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>

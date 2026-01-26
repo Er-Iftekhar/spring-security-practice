@@ -1,3 +1,8 @@
 spring:
     application:
       name: name=basic-auth-no-db
+    thymeleaf:
+      cache:
+        prefix: "classpath: /templates/"
+        suffix: .html
+

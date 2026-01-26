@@ -1,0 +1,7 @@
+/home/iftekhar/Desktop/Learning/Security/practise/spring-security-practice/basic-auth-with-oracle-db/src/main/java/com/app/basic_auth_oracle_db/BasicAuthWithOracleDbApplication.java
+/home/iftekhar/Desktop/Learning/Security/practise/spring-security-practice/basic-auth-with-oracle-db/src/main/java/com/app/basic_auth_oracle_db/Role.java
+/home/iftekhar/Desktop/Learning/Security/practise/spring-security-practice/basic-auth-with-oracle-db/src/main/java/com/app/basic_auth_oracle_db/controller/AuthController.java
+/home/iftekhar/Desktop/Learning/Security/practise/spring-security-practice/basic-auth-with-oracle-db/src/main/java/com/app/basic_auth_oracle_db/entity/AppUser.java
+/home/iftekhar/Desktop/Learning/Security/practise/spring-security-practice/basic-auth-with-oracle-db/src/main/java/com/app/basic_auth_oracle_db/repository/UserRepository.java
+/home/iftekhar/Desktop/Learning/Security/practise/spring-security-practice/basic-auth-with-oracle-db/src/main/java/com/app/basic_auth_oracle_db/security/CustomUserDetailsService.java
+/home/iftekhar/Desktop/Learning/Security/practise/spring-security-practice/basic-auth-with-oracle-db/src/main/java/com/app/basic_auth_oracle_db/security/SecurityConfig.java

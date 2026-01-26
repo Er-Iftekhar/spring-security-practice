@@ -17,5 +17,7 @@
 	<url/>
     <modules>
         <module>basic-auth-no-db</module>
+		<module>basic-auth-with-oracle-db</module>
+        <module>spring-security-ldap-demo</module>
     </modules>
 </project>

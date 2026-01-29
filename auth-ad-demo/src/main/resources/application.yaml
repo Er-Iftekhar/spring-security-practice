@@ -1,3 +1,11 @@
 spring:
   application:
     name: auth-ad-demo
+
+  ldap:
+    urls: ldap://192.168.122.10:389
+    base: dc=corp,dc=local
+    username: Administrator@corp.local
+    password: syed1234@
+
+

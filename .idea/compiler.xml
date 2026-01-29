@@ -7,7 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="spring-security-ldap-demo" />
+        <module name="auth-ad-demo" />
+      </profile>
+      <profile name="Annotation profile for auth-dao-app" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="auth-dao-app" />
       </profile>
       <profile name="Annotation profile for spring-security-practice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -16,26 +25,20 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="basic-auth-no-db" />
-      </profile>
-      <profile name="Annotation profile for basic-auth-with-oracle-db" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
         <module name="basic-auth-with-oracle-db" />
+        <module name="basic-auth-no-db" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="basic-auth-oracle-db" target="17" />
+      <module name="spring-security-ldap-demo" target="17" />
       <module name="untitled" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth-ad-demo" options="-parameters" />
+      <module name="auth-dao-app" options="-parameters" />
       <module name="basic-auth-no-db" options="-parameters" />
       <module name="basic-auth-oracle-db" options="-parameters" />
       <module name="basic-auth-with-oracle-db" options="-parameters" />

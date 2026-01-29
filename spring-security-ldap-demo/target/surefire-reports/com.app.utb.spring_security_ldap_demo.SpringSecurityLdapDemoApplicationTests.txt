@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.app.utb.spring_security_ldap_demo.SpringSecurityLdapDemoApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.726 s -- in com.app.utb.spring_security_ldap_demo.SpringSecurityLdapDemoApplicationTests

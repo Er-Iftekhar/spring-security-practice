@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: auth-dao
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

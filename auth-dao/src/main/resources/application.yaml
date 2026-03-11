@@ -7,3 +7,8 @@ logging:
     org:
       springframework:
         security: DEBUG
+
+app:
+  host: localhost
+  jwt:
+    secret: my_secret

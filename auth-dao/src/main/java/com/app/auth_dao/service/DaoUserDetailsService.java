@@ -40,10 +40,10 @@ public class DaoUserDetailsService implements UserDetailsService {
 
     List<DaoUser> users = new ArrayList<>();
     private void initUsers(){
-        users.add(new DaoUser("officer1", ENCRYPTED_PASSWORD, Authority.OFFICER));
-        users.add(new DaoUser("officer2", ENCRYPTED_PASSWORD, Authority.OFFICER));
+        users.add(new DaoUser("officer1", ENCRYPTED_PASSWORD, Authority.OFFICER_AUTHORITY));
+        users.add(new DaoUser("officer2", ENCRYPTED_PASSWORD, Authority.OFFICER_AUTHORITY));
 
-        users.add(new DaoUser("coordinator1", ENCRYPTED_PASSWORD, Authority.COORDINATOR));
-        users.add(new DaoUser("coordinator2", ENCRYPTED_PASSWORD, Authority.COORDINATOR));
+        users.add(new DaoUser("coordinator1", ENCRYPTED_PASSWORD, Authority.COORDINATOR_AUTHORITY));
+        users.add(new DaoUser("coordinator2", ENCRYPTED_PASSWORD, Authority.COORDINATOR_AUTHORITY));
     }
 }

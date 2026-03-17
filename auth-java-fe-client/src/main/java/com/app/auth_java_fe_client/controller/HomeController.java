@@ -11,4 +11,15 @@ public class HomeController {
         model.addAttribute("message", "Hello from the Frontend");
         return "home";
     }
+    @GetMapping("/dashboard")
+    public String dashboard(Model model){
+        model.addAttribute("message", "Hello from the dashboard");
+        return "dashboard";
+    }
+
+    @GetMapping("/public")
+    public String publicAccess(Model model){
+        model.addAttribute("message", "Hello from the dashboard");
+        return "public";
+    }
 }

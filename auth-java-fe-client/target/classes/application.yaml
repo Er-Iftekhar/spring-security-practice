@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: auth-java-fe-client
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+app:
+  host: localhost
+  jwt:
+    secret: my_secret

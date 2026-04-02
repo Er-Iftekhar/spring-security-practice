@@ -14,9 +14,9 @@ public class ClientService {
     @PostConstruct
     public void initClients(){
         clients = List.of(
-                new Client("bcm-portal", null, "http://localhost:3000"),
-                new Client("bcm-admin", null, "http://localhost:3001"),
-                new Client("bia", null, "http://localhost:3002"));
+                new Client("b-portal", null, "http://localhost:3000"),
+                new Client("b-admin", null, "http://localhost:3001"),
+                new Client("b-app", null, "http://localhost:3002"));
     }
 
     public Optional<Client> findById(String id){

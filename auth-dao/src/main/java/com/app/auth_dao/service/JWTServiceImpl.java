@@ -1,9 +1,11 @@
 package com.app.auth_dao.service;
 
+import com.app.auth_dao.model.UserInfo;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +23,18 @@ public class JWTServiceImpl implements JWTService {
 
     public JWTServiceImpl(@Value("${app.jwt.secret}") String secret){
         this.algorithm = Algorithm.HMAC256(secret);
+    }
+
+    @Override
+    public String createIdToken(String username, List<String> scope, UserInfo userInfo) {
+        return tokenBuilder()
+                .withSubject(username)
+                .withClaim("scope", scope)
+                .withClaim("first_name", userInfo.getFirstName())
+                .withClaim("last_name", userInfo.getLastName())
+                .withClaim("email", userInfo.getEmail())
+                .withClaim("phone", userInfo.getPhone())
+                .sign(algorithm);
     }
 
     @Override
@@ -49,5 +63,10 @@ public class JWTServiceImpl implements JWTService {
                 .withIssuer(issuer)
                 .withIssuedAt(issuedAt)
                 .withExpiresAt(expiresAt);
+    }
+
+    @Override
+    public void validateToken(String token) throws BadCredentialsException {
+
     }
 }

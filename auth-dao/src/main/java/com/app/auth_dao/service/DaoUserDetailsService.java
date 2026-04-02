@@ -45,5 +45,14 @@ public class DaoUserDetailsService implements UserDetailsService {
 
         users.add(new DaoUser("coordinator1", ENCRYPTED_PASSWORD, Authority.COORDINATOR_AUTHORITY));
         users.add(new DaoUser("coordinator2", ENCRYPTED_PASSWORD, Authority.COORDINATOR_AUTHORITY));
+
+        users.forEach(u ->{
+            String[] names = u.getUsername().split("-");
+
+            u.setFirstName(names.length == 2 ? names[0] : "bcm");
+            u.setLastName(names.length == 2 ? names[1] : names[0]);
+            u.setEmail(u.getEmail() + "." + u.getLastName() + "@company.com");
+            u.setPhone("420 2222 2222");
+        });
     }
 }

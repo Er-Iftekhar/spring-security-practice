@@ -4,19 +4,26 @@ import com.app.auth_dao.model.AuthRequest;
 import com.app.auth_dao.model.AuthResponse;
 import com.app.auth_dao.model.Authority;
 import com.app.auth_dao.model.Client;
+import com.app.auth_dao.model.UserInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
     private final ClientService clientService;
     private final JWTService jwtService;
+    private final UserDetailsService userDetailsService;
+    private final ScopeService scopeService;
 
     public AuthResponse processRequest(AuthRequest request){
         String responseType = request.get("response_type");
@@ -53,17 +60,56 @@ public class AuthService {
     private AuthResponse implicitFlow(AuthRequest request){
         AuthResponse response = new AuthResponse();
         response.set("token_type", "Bearer");
-        response.set("access_token", createAccessToken());
+        response.set("access_token", createAccessToken(request));
         response.set("expires_in", String.valueOf(jwtService.getExpiration()));
+        scope(request, response);
 
         return response;
     }
 
-    private String createAccessToken(){
+    private String createAccessToken(AuthRequest request){
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
-        List<String> scope = Authority.mapAuthorities(authentication);
-        return jwtService.createAccessToken(userName, scope);
+        List<String> allowedScopes =
+                Authority.mapAuthorities(authentication);
+        List<String> requestedScopes =
+                ScopeParserService.parse(request.get("scope"));
+        List<String> finalScopes =
+                scopeService.validateScopes(requestedScopes, allowedScopes);
+
+        return jwtService.createAccessToken(userName, finalScopes);
+    }
+
+    private String createIdToken(){
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        List<String> scope =
+                Authority.mapAuthorities(authentication);
+
+        UserInfo userInfo =
+                (UserInfo) userDetailsService.loadUserByUsername(userName);
+
+        return jwtService.createIdToken(userName, scope, userInfo);
+    }
+
+    private void scope(AuthRequest request, AuthResponse response){
+        String scope = request.get("scope");
+
+        if(scope == null){
+            return;
+        }
+        if(Arrays.asList(scope.split("\\s")).contains("openId")){
+            openId(response);
+        }
+    }
+
+    private void openId(AuthResponse response){
+        try {
+            response.set("id_token", createIdToken());
+        } catch (Exception e) {
+            log.error("Cannot get user info: {}", e.getMessage());
+        }
     }
 }

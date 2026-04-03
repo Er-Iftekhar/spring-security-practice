@@ -4,13 +4,17 @@ import com.app.auth_dao.model.AuthRequest;
 import com.app.auth_dao.model.AuthResponse;
 import com.app.auth_dao.model.Authority;
 import com.app.auth_dao.model.Client;
+import com.app.auth_dao.model.TokenRequest;
+import com.app.auth_dao.model.TokenResponse;
 import com.app.auth_dao.model.UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -101,5 +105,37 @@ public class AuthService {
         List<String> scope = Authority.mapAuthorities(authentication);
         UserInfo userInfo = (UserInfo) userDetailsService.loadUserByUsername(userName);
         return jwtService.createIdToken(userName, scope, userInfo);
+    }
+
+    public TokenResponse processTokenRequest(TokenRequest request){
+        if(request.grant_type() == null || request.grant_type().isBlank()){
+            throw new RequestRejectedException("Missing grant_type");
+        }
+
+        if(!"password".equals(request.grant_type())){
+            throw new RequestRejectedException("Invalid grant_type");
+        }
+        validateClient(request.client_id(), request.client_secret());
+        String accessToken = createAccessToken();
+
+        return new TokenResponse(
+                "Bearer",
+                accessToken,
+                jwtService.getExpiration()
+        );
+    }
+
+    private void validateClient(String clientId, String clientSecret){
+        if(clientId == null || clientId.isBlank()){
+            throw new RestClientException("Missing client_id");
+        }
+        Client client = clientService.findById(clientId)
+                .orElseThrow(() -> new RestClientException("Unauthorized client"));
+
+        if(client.secret() != null){
+            if(clientSecret == null || !client.secret().equals(clientSecret)){
+                throw new RestClientException("Invalid client_secret");
+            }
+        }
     }
 }

@@ -23,12 +23,11 @@ public class AuthService {
     private final ClientService clientService;
     private final JWTService jwtService;
     private final UserDetailsService userDetailsService;
-    private final ScopeService scopeService;
 
     public AuthResponse processRequest(AuthRequest request){
         String responseType = request.get("response_type");
 
-        if(responseType == null){
+        if(responseType == null || responseType.isBlank()){
             throw new RuntimeException("Missing response_type");
         }
 
@@ -42,7 +41,7 @@ public class AuthService {
     public String getRedirect(AuthRequest request){
         String clientId = request.get("client_id");
 
-        if(clientId == null){
+        if(clientId == null || clientId.isBlank()){
             throw new RuntimeException("redirect_uri missing");
         }
 
@@ -54,44 +53,18 @@ public class AuthService {
         if(redirectUri != null && !client.redirectUri().equals(redirectUri)){
             throw new RuntimeException("INvalid redirect URI");
         }
-        return redirectUri;
+        return client.redirectUri();
     }
 
     private AuthResponse implicitFlow(AuthRequest request){
         AuthResponse response = new AuthResponse();
         response.set("token_type", "Bearer");
-        response.set("access_token", createAccessToken(request));
+        response.set("access_token", createAccessToken());
         response.set("expires_in", String.valueOf(jwtService.getExpiration()));
+
         scope(request, response);
 
         return response;
-    }
-
-    private String createAccessToken(AuthRequest request){
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
-        List<String> allowedScopes =
-                Authority.mapAuthorities(authentication);
-        List<String> requestedScopes =
-                ScopeParserService.parse(request.get("scope"));
-        List<String> finalScopes =
-                scopeService.validateScopes(requestedScopes, allowedScopes);
-
-        return jwtService.createAccessToken(userName, finalScopes);
-    }
-
-    private String createIdToken(){
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
-        List<String> scope =
-                Authority.mapAuthorities(authentication);
-
-        UserInfo userInfo =
-                (UserInfo) userDetailsService.loadUserByUsername(userName);
-
-        return jwtService.createIdToken(userName, scope, userInfo);
     }
 
     private void scope(AuthRequest request, AuthResponse response){
@@ -100,7 +73,7 @@ public class AuthService {
         if(scope == null){
             return;
         }
-        if(Arrays.asList(scope.split("\\s")).contains("openId")){
+        if(Arrays.asList(scope.split("\\s")).contains("openid")){
             openId(response);
         }
     }
@@ -111,5 +84,22 @@ public class AuthService {
         } catch (Exception e) {
             log.error("Cannot get user info: {}", e.getMessage());
         }
+    }
+
+    private String createAccessToken(){
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        List<String> scope = Authority.mapAuthorities(authentication);
+        return jwtService.createAccessToken(userName, scope);
+    }
+
+    private String createIdToken(){
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        List<String> scope = Authority.mapAuthorities(authentication);
+        UserInfo userInfo = (UserInfo) userDetailsService.loadUserByUsername(userName);
+        return jwtService.createIdToken(userName, scope, userInfo);
     }
 }

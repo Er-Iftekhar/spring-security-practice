@@ -1,6 +1,5 @@
 package com.app.auth_dao.model;
 
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,25 +10,24 @@ import java.util.Map;
 import java.util.Set;
 
 @Slf4j
-@NoArgsConstructor
-public class Authority {
+public final class Authority {
 
     public static final String OFFICER_SCOPE = "OFFICER";
-    public static final String OFFICER_AUTHORITY = "GD_CL_01SS19-ACCESS-OFFICER";
+    public static final String OFFICER_AUTHORITY = "XR_CL_0XXX1-ACCESS-OFFICER";
 
     public static final String F1_MANAGER_SCOPE = "F1_MANAGER";
-    public static final String F1_MANAGER_AUTHORITY = "GD_CL_01SS19-ACCESS-F1_MANAGER";
+    public static final String F1_MANAGER_AUTHORITY = "XR_CL_0XXX1-ACCESS-F1_MANAGER";
 
     public static final String F2_MANAGER_SCOPE = "F2_MANAGER";
-    public static final String F2_MANAGER_AUTHORITY = "GD_CL_01SS19-ACCESS-F2_MANAGER";
+    public static final String F2_MANAGER_AUTHORITY = "XR_CL_0XXX1-ACCESS-F2_MANAGER";
 
     public static final String COORDINATOR_SCOPE = "COORDINATOR";
-    public static final String COORDINATOR_AUTHORITY = "GD_CL_01SS19-ACCESS-COORDINATOR";
+    public static final String COORDINATOR_AUTHORITY = "XR_CL_0XXX1-ACCESS-COORDINATOR";
 
     // TODO define scope for these roles
-    public static final String D_SUPPORTER = "GD_CL_01SS19-ACCESS-D_SUPPORTER";
-    public static final String B_SUPPORTER = "GD_CL_01SS19-ACCESS-B_SUPPORTER";
-    public static final String AUDITOR = "GD_CL_01SS19-ACCESS-AUDITOR";
+    public static final String D_SUPPORTER = "XR_CL_0XXX1-ACCESS-D_SUPPORTER";
+    public static final String B_SUPPORTER = "XR_CL_0XXX1-ACCESS-B_SUPPORTER";
+    public static final String AUDITOR = "XR_CL_0XXX1-ACCESS-AUDITOR";
 
     private static final Map<String, String> authorityScopeMap = Map.of(
             OFFICER_AUTHORITY, OFFICER_SCOPE,

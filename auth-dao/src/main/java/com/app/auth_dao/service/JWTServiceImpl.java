@@ -4,6 +4,7 @@ import com.app.auth_dao.model.UserInfo;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,10 @@ public class JWTServiceImpl implements JWTService {
     }
 
     @Override
-    public String createAccessToken(String username, List<String> scope) {
+    public String createAccessToken(String username, List<String> scopes) {
         return tokenBuilder()
                 .withSubject(username)
-                .withClaim("scope", scope)
+                .withClaim("scope", scopes)
                 .sign(algorithm);
     }
 
@@ -66,7 +67,12 @@ public class JWTServiceImpl implements JWTService {
     }
 
     @Override
-    public void validateToken(String token) throws BadCredentialsException {
+    public String validateToken(String token) throws BadCredentialsException {
+        DecodedJWT jwt = JWT.require(algorithm)
+                .withIssuer(issuer)
+                .build()
+                .verify(token);
 
+        return jwt.getSubject();
     }
 }

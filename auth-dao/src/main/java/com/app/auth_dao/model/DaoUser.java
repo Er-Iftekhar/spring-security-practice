@@ -16,8 +16,9 @@ public class DaoUser extends User implements UserInfo{
     private String email;
     private String phone;
 
-
-    public DaoUser(String username, String password, String authorities) {
+    public DaoUser(String username,
+                   String password,
+                   String authorities) {
         super(username, password, List.of(new SimpleGrantedAuthority(authorities)));
     }
 

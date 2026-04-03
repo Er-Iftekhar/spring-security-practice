@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface JWTService extends JWTValidator {
     String createIdToken(String username, List<String> scope, UserInfo userInfo);
-    String createAccessToken(String username, List<String> scope);
+    String createAccessToken(String username, List<String> scopes);
     int getExpiration();
 }

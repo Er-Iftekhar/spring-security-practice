@@ -13,27 +13,31 @@ import java.util.Set;
 public final class Authority {
 
     public static final String OFFICER_SCOPE = "OFFICER";
-    public static final String OFFICER_AUTHORITY = "XR_CL_0XXX1-ACCESS-OFFICER";
+    public static final String OFFICER_AUTHORITY = "XR_XL-0XXX1-MP_ALL-OFFICER-PRD";
 
     public static final String F1_MANAGER_SCOPE = "F1_MANAGER";
-    public static final String F1_MANAGER_AUTHORITY = "XR_CL_0XXX1-ACCESS-F1_MANAGER";
+    public static final String F1_MANAGER_AUTHORITY_LONDON = "XR_XL-0XXX1-MP_XBLONDON-F1MANAGER-PRD";
 
     public static final String F2_MANAGER_SCOPE = "F2_MANAGER";
-    public static final String F2_MANAGER_AUTHORITY = "XR_CL_0XXX1-ACCESS-F2_MANAGER";
+    public static final String F2_MANAGER_AUTHORITY_LONDON = "XR_XL-0XXX1-MP_XBLONDON-F2MANAGER-PRD";
 
     public static final String COORDINATOR_SCOPE = "COORDINATOR";
-    public static final String COORDINATOR_AUTHORITY = "XR_CL_0XXX1-ACCESS-COORDINATOR";
+    public static final String COORDINATOR_SUB_AUTHORITY_LONDON = "XR_XL-0XXX1-MP_XBLONDON-COORDSUB-PRD";
+    public static final String COORDINATOR_SUB_AUTHORITY_OSLO = "XR_XL-0XXX1-MP_XBOSLO-COORDSUB-PRD";
+    public static final String COORDINATOR_HEAD_AUTHORITY_LONDON = "XR_XL-0XXX1-MP_XBLONDON-COORDHEAD-PRD";
 
     // TODO define scope for these roles
-    public static final String D_SUPPORTER = "XR_CL_0XXX1-ACCESS-D_SUPPORTER";
-    public static final String B_SUPPORTER = "XR_CL_0XXX1-ACCESS-B_SUPPORTER";
-    public static final String AUDITOR = "XR_CL_0XXX1-ACCESS-AUDITOR";
+    public static final String D_SUPPORTER = "XR_XL-0XXX1-MP_XBLONDON-DSUPPORT-PRD";
+    public static final String B_SUPPORTER = "XR_XL-0XXX1-MP_XBLONDON-BSUPPORT-PRD";
+    public static final String AUDITOR = "XR_XL-0XXX1-MP_XBLONDON-AUDITOR-PRD";
 
     private Authority(){}
 
     private static final Map<String, String> authorityScopeMap = Map.of(
             OFFICER_AUTHORITY, OFFICER_SCOPE,
-            COORDINATOR_AUTHORITY, COORDINATOR_SCOPE
+            COORDINATOR_SUB_AUTHORITY_LONDON, COORDINATOR_SCOPE,
+            COORDINATOR_HEAD_AUTHORITY_LONDON, COORDINATOR_SCOPE,
+            COORDINATOR_SUB_AUTHORITY_OSLO, COORDINATOR_SCOPE
             // TODO add scope map for further authorities
     );
 

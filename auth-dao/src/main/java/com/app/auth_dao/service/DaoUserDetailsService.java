@@ -1,5 +1,7 @@
 package com.app.auth_dao.service;
 
+import com.app.auth_dao.mapper.GroupRoleMapper;
+import com.app.auth_dao.mapper.GroupUnitMapper;
 import com.app.auth_dao.model.Authority;
 import com.app.auth_dao.model.DaoUser;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +42,15 @@ public class DaoUserDetailsService implements UserDetailsService {
 
     List<DaoUser> users = new ArrayList<>();
     private void initUsers(){
-        users.add(new DaoUser("officer1", ENCRYPTED_PASSWORD, Authority.OFFICER_AUTHORITY, List.of(
-                "OFFICER"
-        ), List.of("CB UK")));
+        DaoUser officer1 = new DaoUser("officer1", ENCRYPTED_PASSWORD, Authority.OFFICER_AUTHORITY);
+        DaoUser coordinator1 = new DaoUser("coordinator1", ENCRYPTED_PASSWORD, Authority.COORDINATOR_HEAD_AUTHORITY_LONDON);
+        DaoUser coordinator2 = new DaoUser("coordinator2", ENCRYPTED_PASSWORD, Authority.COORDINATOR_SUB_AUTHORITY_LONDON);
+
+        coordinator1.setGroups(List.of(Authority.COORDINATOR_SUB_AUTHORITY_OSLO, Authority.COORDINATOR_SUB_AUTHORITY_LONDON));
+        coordinator2.setGroups(List.of(Authority.COORDINATOR_HEAD_AUTHORITY_LONDON, Authority.COORDINATOR_SUB_AUTHORITY_LONDON));
+        officer1.setGroups(List.of(Authority.OFFICER_AUTHORITY));
+
+        users = List.of(officer1, coordinator2, coordinator1);
 
         users.forEach(u ->{
             String[] names = u.getUsername().split("-");
@@ -51,6 +59,10 @@ public class DaoUserDetailsService implements UserDetailsService {
             u.setLastName(names.length == 2 ? names[1] : names[0]);
             u.setEmail(u.getEmail() + "." + u.getLastName() + "@company.com");
             u.setPhone("420 2222 2222");
+
+            List<String> groups = u.getGroups() == null ? List.of() : u.getGroups();
+            u.setRoles(GroupRoleMapper.mapRoles(groups));
+            u.setUnits(GroupUnitMapper.mapUnits(groups));
         });
     }
 }

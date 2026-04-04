@@ -15,17 +15,14 @@ public class DaoUser extends User implements UserInfo{
     private String lastName;
     private String email;
     private String phone;
+    private List<String> groups;
     private List<String> roles;
     private List<String> units;
 
     public DaoUser(String username,
                    String password,
-                   String authorities,
-                   List<String> roles,
-                   List<String> units) {
+                   String authorities) {
         super(username, password, List.of(new SimpleGrantedAuthority(authorities)));
-        this.roles = roles;
-        this.units = units;
     }
 
     public DaoUser(DaoUser other){
@@ -34,6 +31,7 @@ public class DaoUser extends User implements UserInfo{
         this.lastName = other.getLastName();
         this.email = other.getEmail();
         this.phone = other.getPhone();
+        this.groups = other.getGroups();
         this.roles = other.getRoles();
         this.units = other.getUnits();
     }

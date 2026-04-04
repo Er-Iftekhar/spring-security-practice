@@ -95,7 +95,8 @@ public class AuthService {
                 SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         List<String> scope = Authority.mapAuthorities(authentication);
-        return jwtService.createAccessToken(userName, scope);
+        UserInfo userInfo = (UserInfo) userDetailsService.loadUserByUsername(userName);
+        return jwtService.createAccessToken(userName, scope, userInfo);
     }
 
     private String createIdToken(){

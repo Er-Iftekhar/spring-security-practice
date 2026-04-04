@@ -35,14 +35,18 @@ public class JWTServiceImpl implements JWTService {
                 .withClaim("last_name", userInfo.getLastName())
                 .withClaim("email", userInfo.getEmail())
                 .withClaim("phone", userInfo.getPhone())
+                .withClaim("roles", userInfo.getRoles())
+                .withClaim("units", userInfo.getUnits())
                 .sign(algorithm);
     }
 
     @Override
-    public String createAccessToken(String username, List<String> scopes) {
+    public String createAccessToken(String username, List<String> scopes, UserInfo userInfo) {
         return tokenBuilder()
                 .withSubject(username)
                 .withClaim("scope", scopes)
+                .withClaim("roles", userInfo.getRoles())
+                .withClaim("units", userInfo.getUnits())
                 .sign(algorithm);
     }
 

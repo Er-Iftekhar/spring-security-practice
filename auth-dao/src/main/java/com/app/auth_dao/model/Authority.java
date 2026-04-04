@@ -29,6 +29,8 @@ public final class Authority {
     public static final String B_SUPPORTER = "XR_CL_0XXX1-ACCESS-B_SUPPORTER";
     public static final String AUDITOR = "XR_CL_0XXX1-ACCESS-AUDITOR";
 
+    private Authority(){}
+
     private static final Map<String, String> authorityScopeMap = Map.of(
             OFFICER_AUTHORITY, OFFICER_SCOPE,
             COORDINATOR_AUTHORITY, COORDINATOR_SCOPE

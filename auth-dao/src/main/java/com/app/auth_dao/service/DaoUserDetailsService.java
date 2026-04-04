@@ -40,9 +40,9 @@ public class DaoUserDetailsService implements UserDetailsService {
 
     List<DaoUser> users = new ArrayList<>();
     private void initUsers(){
-        users.add(new DaoUser("officer1", ENCRYPTED_PASSWORD, Authority.OFFICER_AUTHORITY));
-        users.add(new DaoUser("coordinator1", ENCRYPTED_PASSWORD, Authority.COORDINATOR_AUTHORITY));
-        users.add(new DaoUser("f2-manager1", ENCRYPTED_PASSWORD, Authority.F2_MANAGER_AUTHORITY));
+        users.add(new DaoUser("officer1", ENCRYPTED_PASSWORD, Authority.OFFICER_AUTHORITY, List.of(
+                "OFFICER"
+        ), List.of("CB UK")));
 
         users.forEach(u ->{
             String[] names = u.getUsername().split("-");

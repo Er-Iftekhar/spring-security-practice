@@ -43,7 +43,7 @@ public class DaoUserDetailsService implements UserDetailsService {
     List<DaoUser> users = new ArrayList<>();
     private void initUsers(){
         DaoUser officer1 = new DaoUser("officer1", ENCRYPTED_PASSWORD, Authority.OFFICER_AUTHORITY);
-        DaoUser coordinator1 = new DaoUser("coordinator1", ENCRYPTED_PASSWORD, Authority.COORDINATOR_HEAD_AUTHORITY_LONDON);
+        DaoUser coordinator1 = new DaoUser("coordinator1", ENCRYPTED_PASSWORD, Authority.COORDINATOR_SUB_AUTHORITY_LONDON);
         DaoUser coordinator2 = new DaoUser("coordinator2", ENCRYPTED_PASSWORD, Authority.COORDINATOR_SUB_AUTHORITY_LONDON);
 
         coordinator1.setGroups(List.of(Authority.COORDINATOR_SUB_AUTHORITY_OSLO, Authority.COORDINATOR_SUB_AUTHORITY_LONDON));
